@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ReceivedRepayment extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     /**
      * The table associated with the model.
@@ -23,7 +24,10 @@ class ReceivedRepayment extends Model
      * @var array
      */
     protected $fillable = [
-        //
+        'loan_id',
+        'received_at',
+        'amount',
+        'currency_code',
     ];
 
     /**
@@ -31,7 +35,7 @@ class ReceivedRepayment extends Model
      *
      * @return BelongsTo
      */
-    public function loan()
+    public function loan(): BelongsTo
     {
         return $this->belongsTo(Loan::class, 'loan_id');
     }

@@ -44,7 +44,7 @@ class Loan extends Model
      *
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -54,8 +54,18 @@ class Loan extends Model
      *
      * @return HasMany
      */
-    public function scheduledRepayments()
+    public function scheduledRepayments(): HasMany
     {
         return $this->hasMany(ScheduledRepayment::class, 'loan_id');
+    }
+
+    /**
+     * A Loan has many Received Repayments
+     *
+     * @return HasMany
+     */
+    public function receivedRepayments(): HasMany
+    {
+        return $this->hasMany(ReceivedRepayment::class, 'loan_id');
     }
 }

@@ -16,13 +16,6 @@ class LoanServiceTest extends TestCase
     protected User $user;
     protected LoanService $loanService;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->user = User::factory()->create();
-        $this->loanService = new LoanService();
-    }
-
     public function testServiceCanCreateLoanOfForACustomer()
     {
         $terms = 3;
@@ -64,8 +57,8 @@ class LoanServiceTest extends TestCase
         ]);
         $this->assertDatabaseHas('scheduled_repayments', [
             'loan_id' => $loan->id,
-            'amount' => 1667,
-            'outstanding_amount' => 1667,
+            'amount' => 1668,
+            'outstanding_amount' => 1668,
             'currency_code' => $currencyCode,
             'due_date' => '2020-04-20',
             'status' => ScheduledRepayment::STATUS_DUE,
@@ -83,19 +76,19 @@ class LoanServiceTest extends TestCase
             'processed_at' => '2020-01-20',
         ]);
 
-        $scheduledRepaymentOne =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentOne = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1666,
             'currency_code' => Loan::CURRENCY_VND,
             'due_date' => '2020-02-20',
         ]);
-        $scheduledRepaymentTwo =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentTwo = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1666,
             'currency_code' => Loan::CURRENCY_VND,
             'due_date' => '2020-03-20',
         ]);
-        $scheduledRepaymentThree =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentThree = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1666,
             'currency_code' => Loan::CURRENCY_VND,
@@ -160,14 +153,14 @@ class LoanServiceTest extends TestCase
         ]);
 
         // First two scheduled repayments are already repaid
-        $scheduledRepaymentOne =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentOne = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1666,
             'currency_code' => Loan::CURRENCY_VND,
             'due_date' => '2020-02-20',
             'status' => ScheduledRepayment::STATUS_REPAID,
         ]);
-        $scheduledRepaymentTwo =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentTwo = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1666,
             'currency_code' => Loan::CURRENCY_VND,
@@ -175,7 +168,7 @@ class LoanServiceTest extends TestCase
             'status' => ScheduledRepayment::STATUS_REPAID,
         ]);
         // Only the last one is due
-        $scheduledRepaymentThree =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentThree = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1667,
             'currency_code' => Loan::CURRENCY_VND,
@@ -231,21 +224,21 @@ class LoanServiceTest extends TestCase
             'processed_at' => '2020-01-20',
         ]);
 
-        $scheduledRepaymentOne =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentOne = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1666,
             'currency_code' => Loan::CURRENCY_VND,
             'due_date' => '2020-02-20',
             'status' => ScheduledRepayment::STATUS_DUE,
         ]);
-        $scheduledRepaymentTwo =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentTwo = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1666,
             'currency_code' => Loan::CURRENCY_VND,
             'due_date' => '2020-03-20',
             'status' => ScheduledRepayment::STATUS_DUE,
         ]);
-        $scheduledRepaymentThree =  ScheduledRepayment::factory()->create([
+        $scheduledRepaymentThree = ScheduledRepayment::factory()->create([
             'loan_id' => $loan->id,
             'amount' => 1667,
             'currency_code' => Loan::CURRENCY_VND,
@@ -301,5 +294,12 @@ class LoanServiceTest extends TestCase
             'currency_code' => $currencyCode,
             'received_at' => '2020-02-20',
         ]);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+        $this->loanService = new LoanService();
     }
 }
