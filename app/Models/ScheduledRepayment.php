@@ -5,10 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ScheduledRepayment extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
+
+    protected $casts = [
+        'amount' => 'integer',
+        'outstanding_amount' => 'integer',
+    ];
 
     public const STATUS_DUE = 'due';
     public const STATUS_PARTIAL = 'partial';
@@ -27,7 +33,12 @@ class ScheduledRepayment extends Model
      * @var array
      */
     protected $fillable = [
-        //
+        'loan_id',
+        'due_date',
+        'amount',
+        'outstanding_amount',
+        'status',
+        'currency_code',
     ];
 
     /**
@@ -35,7 +46,7 @@ class ScheduledRepayment extends Model
      *
      * @return BelongsTo
      */
-    public function loan()
+    public function loan(): BelongsTo
     {
         return $this->belongsTo(Loan::class, 'loan_id');
     }

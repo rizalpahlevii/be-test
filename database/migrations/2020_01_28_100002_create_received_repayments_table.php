@@ -21,7 +21,6 @@ class CreateReceivedRepaymentsTable extends Migration
             $table->string('currency_code');
             $table->date('received_at');
 
-
             $table->timestamps();
             $table->softDeletes();
 
